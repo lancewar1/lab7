@@ -1,18 +1,17 @@
-const getQuote = () => {
-    fetch("https://the-dune-api.herokuapp.com/quotes")
-    .then(response => response.json())
-    .then(quotes =>{
-        const quote = quotes[0];
-        const quoteDescription = document.createElement("p"); 
-        quoteDescription.textContent = quote.quote;
-        const quoteElement = document.getElementById("dune");
-        quoteElement.innerHTML = ""; 
-
-        quoteElement.appendChild(quoteDescription); 
-    })
-    .catch(err => {
+const getCharacter = () => {
+    fetch("https://bobsburgers-api.herokuapp.com/characters/1")
+      .then(response => response.json())
+      .then(data => {
+        const characterName = document.createElement("h1"); 
+        characterName.textContent = data.name;
+        const characterElement = document.getElementById("burgers");
+        characterElement.innerHTML = ""; 
+  
+        characterElement.appendChild(characterName); 
+      })
+      .catch(err => {
         console.error(err.message);
-    });
-};
-
-document.getElementById("getButton").addEventListener("click", getQuote);
+      });
+  };
+  
+  document.getElementById("getButton").addEventListener("click", getCharacter);
