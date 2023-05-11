@@ -1,18 +1,33 @@
-const getCharacter = () => {
-    fetch("https://bobsburgers-api.herokuapp.com/characters/1")
-    .then(response => response.json())
-    .then(characters =>{
-        const character = characters[0];
-        const characterName = document.createElement("h1"); 
-        characterName.textContent = character.name;
-        const characterElement = document.getElementById("burgers");
-        characterElement.innerHTML = ""; 
-
-        characterElement.appendChild(characterName); 
-    })
-    .catch(err => {
-        console.error(err.message);
-    });
+window.onload = function() {
+    const getFact = () => {
+        fetch("https://cat-fact.herokuapp.com/facts")
+        .then(response => response.json())
+        .then(facts => {
+            const randomIndex = Math.floor(Math.random() * facts.length);
+            const fact = facts[randomIndex];
+            const nameElement = document.createElement("h2");
+            nameElement.textContent = fact.text;
+            const factElement = document.getElementById("facts");
+            factElement.innerHTML = "";
+            factElement.appendChild(nameElement);
+    
+            fetch("https://cataas.com/cat")
+            .then(response => {
+                const catImage = document.createElement("img");
+                catImage.src = response.url;
+                catImage.alt = "Random cat image";
+                catImage.width = 300; 
+                factElement.appendChild(catImage);
+            })
+            .catch(err => {
+                console.error(err.message);
+            });
+        })
+        .catch(err => {
+            console.error(err.message);
+        });
+    };
+    
+    document.getElementById("getButton").addEventListener("click", getFact);
 };
 
-document.getElementById("getButton").addEventListener("click", getCharacter);
